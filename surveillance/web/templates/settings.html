@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Settings &middot; Smart Surveillance System{% endblock %}
+
+{% block content %}
+<section class="section-head">
+  <h2>Runtime configuration</h2>
+  {% if saved %}<p class="saved">Applied to the running system.</p>{% endif %}
+</section>
+
+<p class="note">
+  Changes here take effect immediately but are not written back to
+  <code>config.yaml</code>, so a restart returns to the reviewed defaults.
+</p>
+
+<form method="post">
+  <h3>Detection thresholds</h3>
+  <div class="table-wrap">
+    <table class="log">
+      <thead>
+        <tr><th>Detector</th><th>Weights</th><th class="num">Default</th><th class="num">Active</th></tr>
+      </thead>
+      <tbody>
+        {% for detector in detectors %}
+        <tr>
+          <td>{{ detector.id }}</td>
+          <td><code>{{ detector.weights }}</code></td>
+          <td class="num">{{ '%.2f' % detector.configured }}</td>
+          <td class="num">
+            <input type="number" name="conf_{{ detector.id }}" step="0.01"
+                   min="0.01" max="0.99" value="{{ '%.2f' % detector.active }}">
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Alert rules</h3>
+  <p class="note">
+    <strong>Consecutive frames</strong> is the false-positive guard: the
+    condition must hold for that many processed frames before anyone is
+    notified. <strong>Cooldown</strong> then suppresses repeats of the same
+    event on the same camera.
+  </p>
+  <div class="table-wrap">
+    <table class="log">
+      <thead>
+        <tr>
+          <th>Event</th><th>Severity</th><th class="num">Consecutive frames</th>
+          <th class="num">Cooldown (s)</th><th>Channels</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event, rule in rules.items() %}
+        <tr>
+          <td>{{ event.replace('_', ' ') }}</td>
+          <td><span class="sev">{{ rule.severity }}</span></td>
+          <td class="num">
+            <input type="number" name="frames_{{ event }}" min="1" max="60"
+                   value="{{ rule.min_consecutive_frames }}">
+          </td>
+          <td class="num">
+            <input type="number" name="cooldown_{{ event }}" min="0" max="3600"
+                   step="5" value="{{ rule.cooldown_seconds | int }}">
+          </td>
+          <td>
+            {% for channel in rule.channels %}
+              <span class="chip {{ 'off' if channel == 'email' and not email_enabled }}">
+                {{ channel }}{% if channel == 'email' and not email_enabled %} (not configured){% endif %}
+              </span>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <button type="submit" class="primary">Apply changes</button>
+</form>
+
+<h3>Data retention</h3>
+<ul class="facts">
+  <li>Snapshots saved: <strong>{{ 'only for alerts' if storage.save_snapshots else 'disabled' }}</strong></li>
+  <li>Retention window: <strong>{{ storage.retention_days }} days</strong>, purged hourly</li>
+  <li>Event log: <code>{{ storage.db_path }}</code></li>
+  <li>Email channel: <strong>{{ 'configured' if email_enabled else 'not configured' }}</strong>
+      &mdash; credentials come from the environment, never from a file in the repository</li>
+</ul>
+{% endblock %}

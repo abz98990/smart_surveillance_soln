@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2020" height="1300" viewBox="0 0 2020 1300" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3E4C59" stroke-width="1.6"/></marker>
+<marker id="filled" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#3E4C59"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="1010.0" y="34" font-size="22" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Alert Sequence for One Frame</text>
+<rect x="24" y="90" width="192" height="56" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="120" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Camera</text>
+<polyline points="120,146 120,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="244" y="90" width="192" height="56" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="340" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">CameraWorker</text>
+<polyline points="340,146 340,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="484" y="90" width="192" height="56" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="580" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">DetectorBundle</text>
+<polyline points="580,146 580,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="724" y="90" width="192" height="56" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="820" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">AnalyticsEngine</text>
+<polyline points="820,146 820,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="974" y="90" width="192" height="56" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="1070" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">AlertManager</text>
+<polyline points="1070,146 1070,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="1224" y="90" width="192" height="56" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1320" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">EventStore</text>
+<polyline points="1320,146 1320,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="1464" y="90" width="192" height="56" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1560" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Channel</text>
+<polyline points="1560,146 1560,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="1714" y="90" width="192" height="56" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1810" y="118" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Administrator</text>
+<polyline points="1810,146 1810,1250" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<rect x="331" y="190" width="18" height="970" rx="0" fill="#DDE4EB" stroke="#3E4C59" stroke-width="2"/>
+<rect x="571" y="240" width="18" height="90" rx="0" fill="#DDE4EB" stroke="#3E4C59" stroke-width="2"/>
+<rect x="811" y="380" width="18" height="90" rx="0" fill="#DDE4EB" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1061" y="520" width="18" height="490" rx="0" fill="#DDE4EB" stroke="#3E4C59" stroke-width="2"/>
+<polyline points="129,190 331,190" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="230.0" y="174" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">frame</text>
+<polyline points="349,240 571,240" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="460.0" y="224" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">detect(frame)</text>
+<polyline points="571,320 349,320" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#open)"/>
+<text x="460.0" y="304" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">detections</text>
+<polyline points="349,380 811,380" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="580.0" y="364" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">update(detections, now)</text>
+<polyline points="811,460 349,460" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#open)"/>
+<text x="580.0" y="444" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">events</text>
+<polyline points="349,520 1061,520" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="705.0" y="504" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">submit(events)</text>
+<rect x="220" y="560" width="1700" height="460" rx="0" fill="none" stroke="#3E4C59" stroke-width="2"/>
+<rect x="220" y="560" width="92" height="26" rx="0" fill="#FFFFFF" stroke="#3E4C59" stroke-width="2"/>
+<text x="266" y="573" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">alt</text>
+<text x="326" y="573" font-size="13" fill="#1F2933" text-anchor="start" dominant-baseline="central">[ debounce and cooldown satisfied ]</text>
+<rect x="1311" y="630" width="18" height="80" rx="0" fill="#DDE4EB" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1551" y="800" width="18" height="80" rx="0" fill="#DDE4EB" stroke="#3E4C59" stroke-width="2"/>
+<polyline points="1079,630 1311,630" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="1195.0" y="614" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">record(alert, snapshot)</text>
+<polyline points="1311,700 1079,700" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#open)"/>
+<text x="1195.0" y="684" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">alert id</text>
+<polyline points="1079,770 1551,770" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="1315.0" y="754" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">enqueue(alert)</text>
+<text x="1315.0" y="787" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">returns immediately – dispatch runs on a worker thread</text>
+<polyline points="1569,850 1801,850" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="1685.0" y="834" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">notify / email</text>
+<polyline points="220,900 1920,900" fill="none" stroke="#7B8794" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<text x="240" y="924" font-size="13" fill="#1F2933" text-anchor="start" dominant-baseline="central">[ suppressed – streak too short, or still cooling down ]</text>
+<polyline points="1061,975 349,975" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#open)"/>
+<text x="705.0" y="959" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">no alerts</text>
+<polyline points="349,1070 430,1070 430,1108 351,1108" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="446" y="1089" font-size="13" fill="#1F2933" text-anchor="start" dominant-baseline="central">publish(annotated frame)</text>
+<polyline points="1810,1180 352,1180" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="1150" y="1160" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">GET /  (dashboard reads the frame buffer)</text>
+</svg>

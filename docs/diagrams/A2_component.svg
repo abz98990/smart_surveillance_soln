@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="900" viewBox="0 0 1880 900" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3E4C59" stroke-width="1.6"/></marker>
+<marker id="filled" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#3E4C59"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="940.0" y="34" font-size="22" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Smart Surveillance System – Components</text>
+<rect x="60" y="70" width="1560" height="780" rx="0" fill="#F7FAFD" stroke="#7B8794" stroke-width="2"/>
+<text x="840" y="96" font-size="15" fill="#7B8794" text-anchor="middle" dominant-baseline="central" font-weight="600">Local server process</text>
+<rect x="75.0" y="278.0" width="150" height="54" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="150" y="294" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«device»</text>
+<text x="150" y="315" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Camera</text>
+<text x="150" y="350" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">USB or RTSP</text>
+<rect x="1665.0" y="633.0" width="150" height="54" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1740" y="649" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«device»</text>
+<text x="1740" y="670" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">SMTP relay</text>
+<text x="1740" y="705" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">external</text>
+<text x="420" y="222" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">surveillance.pipeline</text>
+<rect x="320" y="240" width="200" height="130" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="312" y="258" width="20" height="16" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="312" y="334" width="20" height="16" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="420.0" y="260" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«component»</text>
+<text x="420.0" y="293.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Camera</text>
+<text x="420.0" y="313.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Worker</text>
+<rect x="620" y="150" width="290" height="400" rx="0" fill="#FFFFFF" stroke="#7B8794" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="765" y="176" font-size="14" fill="#7B8794" text-anchor="middle" dominant-baseline="central" font-weight="600">DetectorBundle</text>
+<rect x="660" y="200" width="210" height="76" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<rect x="652" y="218" width="20" height="16" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<rect x="652" y="240" width="20" height="16" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="765.0" y="246.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Person</text>
+<rect x="660" y="296" width="210" height="76" rx="0" fill="#F9DAD7" stroke="#3E4C59" stroke-width="2"/>
+<rect x="652" y="314" width="20" height="16" rx="0" fill="#F9DAD7" stroke="#3E4C59" stroke-width="2"/>
+<rect x="652" y="336" width="20" height="16" rx="0" fill="#F9DAD7" stroke="#3E4C59" stroke-width="2"/>
+<text x="765.0" y="342.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Weapon</text>
+<rect x="660" y="392" width="210" height="76" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="652" y="410" width="20" height="16" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="652" y="432" width="20" height="16" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="765.0" y="438.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Fire / Smoke</text>
+<text x="1100" y="222" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">tracking, loitering, weapon association</text>
+<rect x="1000" y="240" width="200" height="130" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<rect x="992" y="258" width="20" height="16" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<rect x="992" y="334" width="20" height="16" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="1100.0" y="260" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«component»</text>
+<text x="1100.0" y="293.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Analytics</text>
+<text x="1100.0" y="313.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Engine</text>
+<text x="1410" y="222" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">debounce + cooldown</text>
+<rect x="1310" y="240" width="200" height="130" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1302" y="258" width="20" height="16" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1302" y="334" width="20" height="16" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="1410.0" y="260" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«component»</text>
+<text x="1410.0" y="293.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Alert</text>
+<text x="1410.0" y="313.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Manager</text>
+<text x="470" y="762" font-size="11" fill="#7B8794" text-anchor="start" dominant-baseline="central">Flask + MJPEG</text>
+<rect x="320" y="600" width="200" height="130" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="312" y="618" width="20" height="16" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="312" y="694" width="20" height="16" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="420.0" y="620" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«component»</text>
+<text x="420.0" y="653.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Web</text>
+<text x="420.0" y="673.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Dashboard</text>
+<text x="800" y="752" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">SQLite + snapshots</text>
+<rect x="700" y="600" width="200" height="120" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="692" y="618" width="20" height="16" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="692" y="684" width="20" height="16" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="800.0" y="620" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«component»</text>
+<text x="800.0" y="658.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Event Store</text>
+<text x="1410" y="752" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">desktop, email</text>
+<rect x="1310" y="600" width="200" height="120" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1302" y="618" width="20" height="16" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1302" y="684" width="20" height="16" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1410.0" y="620" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«component»</text>
+<text x="1410.0" y="658.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Channels</text>
+<polyline points="225,305 310,305" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="267" y="285" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">frames</text>
+<text x="585" y="272" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">IDetect</text>
+<ellipse cx="585" cy="305" rx="11" ry="11" fill="#FFFFFF" stroke="#3E4C59" stroke-width="2"/>
+<polyline points="520,305 573,305" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="597,305 614,305" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="614,305 652,238" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="614,305 652,334" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="614,305 652,430" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="910,305 995,305" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="952" y="285" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">detections</text>
+<polyline points="1200,305 1305,305" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="1252" y="285" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">events</text>
+<polyline points="1410,370 1410,595" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="1468" y="480" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">dispatch</text>
+<polyline points="1330,370 1330,572 800,572 800,595" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="1065" y="552" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">alerts + snapshot</text>
+<polyline points="1510,660 1660,660" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="1585" y="630" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">SMTP over TLS</text>
+<polyline points="700,660 528,660" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="614" y="638" font-size="11" fill="#7B8794" text-anchor="middle" dominant-baseline="central">alert log</text>
+<polyline points="420,370 420,595" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#open)"/>
+<text x="406" y="470" font-size="11" fill="#7B8794" text-anchor="end" dominant-baseline="central">annotated</text>
+<text x="406" y="488" font-size="11" fill="#7B8794" text-anchor="end" dominant-baseline="central">frames</text>
+<polyline points="420,730 420,792" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<ellipse cx="420" cy="803" rx="11" ry="11" fill="#FFFFFF" stroke="#3E4C59" stroke-width="2"/>
+<text x="439" y="803" font-size="12" fill="#7B8794" text-anchor="start" dominant-baseline="central">HTTP :8000</text>
+</svg>

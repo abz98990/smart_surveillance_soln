@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="1840" viewBox="0 0 1220 1840" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3E4C59" stroke-width="1.6"/></marker>
+<marker id="filled" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#3E4C59"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="610.0" y="34" font-size="22" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Per-Frame Processing Activity</text>
+<ellipse cx="500" cy="100" rx="17" ry="17" fill="#1F2933" stroke="#1F2933" stroke-width="2"/>
+<polyline points="500,117 500,148" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="375.0" y="148" width="250" height="64" rx="12" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="180.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Capture Frame</text>
+<polyline points="500,212 500,256" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<polygon points="500,256 620,302 500,348 380,302" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="293.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Due to process</text>
+<text x="500" y="311.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">at target fps?</text>
+<text x="300" y="286" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">no – drop frame</text>
+<polyline points="380,302 180,302 180,180 375,180" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="520" y="364" font-size="12" fill="#7B8794" text-anchor="start" dominant-baseline="central">yes</text>
+<polyline points="500,348 500,392" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="375.0" y="392" width="250" height="64" rx="12" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="424.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Pre-process Frame</text>
+<rect x="240" y="502" width="520" height="12" rx="0" fill="#1F2933" stroke="#1F2933" stroke-width="2"/>
+<polyline points="500,456 500,502" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<polyline points="285,514 285,572" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="185" y="572" width="200" height="62" rx="12" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="285" y="603.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Detect Person</text>
+<polyline points="500,514 500,572" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="400" y="572" width="200" height="62" rx="12" fill="#F9DAD7" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="603.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Detect Weapon</text>
+<polyline points="715,514 715,572" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="615" y="572" width="200" height="62" rx="12" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="715" y="603.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Detect Fire / Smoke</text>
+<rect x="240" y="684" width="520" height="12" rx="0" fill="#1F2933" stroke="#1F2933" stroke-width="2"/>
+<polyline points="285,634 285,684" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<polyline points="500,634 500,684" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<polyline points="715,634 715,684" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<polyline points="500,696 500,740" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="360.0" y="740" width="280" height="64" rx="12" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="772.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Update Person Tracks</text>
+<polyline points="500,804 500,848" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="360.0" y="848" width="280" height="64" rx="12" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="880.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Evaluate Behaviour Rules</text>
+<polygon points="500,958 630,1004 500,1050 370,1004" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="1004.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Event raised?</text>
+<polyline points="500,912 500,958" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<polyline points="630,1004 840,1004 840,1054" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="680" y="984" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">yes</text>
+<polygon points="840,1054 970,1100 840,1146 710,1100" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="840" y="1091.5" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Debounce and</text>
+<text x="840" y="1108.5" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">cooldown passed?</text>
+<polyline points="840,1146 840,1190" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<text x="854" y="1168" font-size="12" fill="#7B8794" text-anchor="start" dominant-baseline="central">yes</text>
+<rect x="715" y="1190" width="250" height="62" rx="12" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="840" y="1212.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Record Alert</text>
+<text x="840" y="1230.0" font-size="13" fill="#1F2933" text-anchor="middle" dominant-baseline="central">+ Snapshot</text>
+<polyline points="840,1252 840,1296" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="715" y="1296" width="250" height="62" rx="12" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="840" y="1318.5" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Dispatch Notifications</text>
+<text x="840" y="1335.5" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">(worker thread)</text>
+<polyline points="970,1100 1080,1100 1080,1442" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<text x="1030" y="1080" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">no</text>
+<polyline points="840,1358 840,1442" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="370,1004 200,1004 200,1442" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<text x="290" y="984" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">no</text>
+<polyline points="200,1442 1080,1442" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="500,1442 500,1492" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="375.0" y="1492" width="250" height="64" rx="12" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="1524.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Annotate Frame</text>
+<polyline points="500,1556 500,1600" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<rect x="360.0" y="1600" width="280" height="64" rx="12" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="500" y="1632.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Publish to Dashboard</text>
+<polyline points="500,1664 500,1710" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" marker-end="url(#filled)"/>
+<ellipse cx="500" cy="1732" rx="20" ry="20" fill="#FFFFFF" stroke="#1F2933" stroke-width="3"/>
+<ellipse cx="500" cy="1732" rx="11" ry="11" fill="#1F2933" stroke="#1F2933" stroke-width="2"/>
+</svg>

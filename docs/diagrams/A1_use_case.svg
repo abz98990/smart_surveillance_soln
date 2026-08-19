@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="1080" viewBox="0 0 1620 1080" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3E4C59" stroke-width="1.6"/></marker>
+<marker id="filled" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#3E4C59"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="810.0" y="34" font-size="22" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Smart Surveillance System – Use Cases</text>
+<rect x="330" y="70" width="960" height="950" rx="0" fill="#F7FAFD" stroke="#7B8794" stroke-width="2"/>
+<text x="810" y="96" font-size="16" fill="#7B8794" text-anchor="middle" dominant-baseline="central" font-weight="600">Smart Surveillance System</text>
+<rect x="75.0" y="273.0" width="150" height="54" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="150" y="289" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«device»</text>
+<text x="150" y="310" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Camera</text>
+<text x="150" y="350" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">USB or IP</text>
+<ellipse cx="1470" cy="430" rx="15.0" ry="15.0" fill="#FFFFFF" stroke="#3E4C59" stroke-width="2"/>
+<polyline points="1470,445.0 1470,487.0" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1444.0,459.0 1496.0,459.0" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1470,487.0 1450.0,521.0" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1470,487.0 1490.0,521.0" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<text x="1470" y="541.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Administrator</text>
+<rect x="390" y="300" width="500" height="200" rx="0" fill="#FFFFFF" stroke="#7B8794" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="640" y="322" font-size="14" fill="#7B8794" text-anchor="middle" dominant-baseline="central">Detection</text>
+<ellipse cx="560" cy="170" rx="105" ry="52" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="560" y="160.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Capture</text>
+<text x="560" y="180.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Video Feed</text>
+<ellipse cx="505" cy="410" rx="88" ry="46" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="505" y="400.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Detect</text>
+<text x="505" y="420.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Person</text>
+<ellipse cx="700" cy="410" rx="100" ry="46" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="700" y="400.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Detect Weapon,</text>
+<text x="700" y="420.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Fire or Smoke</text>
+<ellipse cx="600" cy="610" rx="95" ry="48" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="600" y="600.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Analyse</text>
+<text x="600" y="620.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Behaviour</text>
+<ellipse cx="600" cy="810" rx="95" ry="46" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="600" y="810.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Raise Alert</text>
+<ellipse cx="960" cy="930" rx="100" ry="44" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="960" y="930.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Notify by Email</text>
+<ellipse cx="1130" cy="190" rx="100" ry="44" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="1130" y="190.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">View Live Feed</text>
+<ellipse cx="1130" cy="350" rx="100" ry="46" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="1130" y="340.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Review</text>
+<text x="1130" y="360.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Alert Log</text>
+<ellipse cx="1130" cy="530" rx="100" ry="46" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1130" y="520.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Acknowledge</text>
+<text x="1130" y="540.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Alert</text>
+<ellipse cx="1130" cy="700" rx="100" ry="46" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="1130" y="690.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Configure</text>
+<text x="1130" y="710.0" font-size="15" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Thresholds</text>
+<polyline points="225,300 455,185" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1425,430 1230,190" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1425,430 1230,350" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1425,430 1230,700" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="560,222 540,364" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<text x="470" y="292" font-size="13" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«include»</text>
+<polyline points="620,222 690,364" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<text x="740" y="292" font-size="13" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«include»</text>
+<polyline points="520,456 575,562" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="690,456 630,562" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<text x="600" y="528" font-size="13" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«include»</text>
+<polyline points="600,658 600,764" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<text x="668" y="712" font-size="13" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«include»</text>
+<polyline points="910,908 686,838" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<text x="820" y="852" font-size="13" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«extend»</text>
+<text x="880" y="985" font-size="12" fill="#7B8794" text-anchor="middle" dominant-baseline="central">only when SMTP is configured</text>
+<polyline points="1130,484 1130,396" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<text x="1210" y="442" font-size="13" fill="#7B8794" text-anchor="middle" dominant-baseline="central">«extend»</text>
+<rect x="60" y="760" width="250" height="210" rx="0" fill="#FFFDF5" stroke="#7B8794" stroke-width="2"/>
+<text x="185" y="786.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Arrow direction:</text>
+<text x="185" y="805.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central"></text>
+<text x="185" y="824.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">«include» points from the</text>
+<text x="185" y="843.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">base to the behaviour it</text>
+<text x="185" y="862.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">always performs.</text>
+<text x="185" y="881.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central"></text>
+<text x="185" y="900.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">«extend» points from the</text>
+<text x="185" y="919.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">optional behaviour to the</text>
+<text x="185" y="938.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">base it may augment.</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1000" viewBox="0 0 1520 1000" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3E4C59" stroke-width="1.6"/></marker>
+<marker id="filled" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#3E4C59"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="760.0" y="34" font-size="22" fill="#1F2933" text-anchor="middle" dominant-baseline="central" font-weight="600">Package Structure and Dependencies</text>
+<rect x="600" y="90" width="144.0" height="26" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<rect x="600" y="116" width="320" height="70" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="612" y="103.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">run.py</text>
+<text x="760.0" y="151.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">entry point</text>
+<rect x="80" y="260" width="135.0" height="26" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="80" y="286" width="300" height="104" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="92" y="273.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.config</text>
+<text x="230.0" y="328.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">config.yaml + environment</text>
+<text x="230.0" y="347.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">no secrets on disk</text>
+<rect x="600" y="260" width="144.0" height="26" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="600" y="286" width="320" height="104" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="612" y="273.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.pipeline</text>
+<text x="760.0" y="328.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">CameraWorker per camera</text>
+<text x="760.0" y="347.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">SurveillanceService</text>
+<rect x="1130" y="260" width="139.5" height="26" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1130" y="286" width="310" height="104" rx="0" fill="#CFE3F5" stroke="#3E4C59" stroke-width="2"/>
+<text x="1142" y="273.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.web</text>
+<text x="1285.0" y="328.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Flask dashboard</text>
+<text x="1285.0" y="347.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">MJPEG streaming</text>
+<rect x="80" y="500" width="135.0" height="26" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<rect x="80" y="526" width="300" height="104" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="92" y="513.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.detectors</text>
+<text x="230.0" y="568.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">YOLO11 inference</text>
+<text x="230.0" y="587.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">lazy ultralytics import</text>
+<rect x="440" y="500" width="135.0" height="26" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<rect x="440" y="526" width="300" height="104" rx="0" fill="#D6EBDD" stroke="#3E4C59" stroke-width="2"/>
+<text x="452" y="513.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.analytics</text>
+<text x="590.0" y="568.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">tracking, loitering,</text>
+<text x="590.0" y="587.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">weapon association</text>
+<rect x="800" y="500" width="135.0" height="26" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<rect x="800" y="526" width="300" height="104" rx="0" fill="#FBE7D2" stroke="#3E4C59" stroke-width="2"/>
+<text x="812" y="513.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.alerts</text>
+<text x="950.0" y="568.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">debounce, cooldown,</text>
+<text x="950.0" y="587.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">threaded dispatch</text>
+<rect x="1160" y="500" width="126.0" height="26" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1160" y="526" width="280" height="104" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1172" y="513.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.storage</text>
+<text x="1300.0" y="568.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">SQLite event log</text>
+<text x="1300.0" y="587.5" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">snapshot retention</text>
+<rect x="300" y="760" width="135.0" height="26" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="300" y="786" width="300" height="94" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="312" y="773.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.render</text>
+<text x="450.0" y="833.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">annotation, letterboxing</text>
+<rect x="660" y="760" width="126.0" height="26" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="660" y="786" width="280" height="94" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="672" y="773.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.geometry</text>
+<text x="800.0" y="833.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">pure sizing helpers</text>
+<rect x="1000" y="760" width="135.0" height="26" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<rect x="1000" y="786" width="300" height="94" rx="0" fill="#EEF1F4" stroke="#3E4C59" stroke-width="2"/>
+<text x="1012" y="773.0" font-size="14" fill="#1F2933" text-anchor="start" dominant-baseline="central" font-weight="600">surveillance.channels</text>
+<text x="1150.0" y="833.0" font-size="14" fill="#1F2933" text-anchor="middle" dominant-baseline="central">desktop, email</text>
+<polyline points="700,186 700,254" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="790,186 1230,254" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="600,152 262,254" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="680,390 300,496" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="740,390 600,496" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="820,390 930,496" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="600,330 410,330 410,752" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="950,560 1155,560" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="980,630 1120,756" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="1230,390 1000,500" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="1240,390 1300,496" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<polyline points="450,810 730,810" fill="none" stroke="#3E4C59" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#filled)"/>
+<rect x="80" y="880" width="380" height="90" rx="0" fill="#FFFDF5" stroke="#7B8794" stroke-width="2"/>
+<text x="270" y="914.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">Dashed arrow = depends on (imports).</text>
+<text x="270" y="936.0" font-size="12" fill="#1F2933" text-anchor="middle" dominant-baseline="central">No cycles: analytics and storage import nothing from the pipeline.</text>
+</svg>

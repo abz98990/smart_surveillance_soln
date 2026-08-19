@@ -1,17 +1,27 @@
-requests>=2.27.1
-numpy>=1.14.0
-pandas>=0.23.4
-gdown>=3.10.1
-tqdm>=4.30.0
-Pillow>=5.2.0
-opencv-python>=4.5.5.64
-tensorflow>=1.9.0
-keras>=2.2.0
-Flask>=1.1.2
-flask_cors>=4.0.1
-mtcnn>=0.1.0
-retina-face>=0.0.14
-fire>=0.4.0
-gunicorn>=20.1.0
+# Smart Surveillance System - runtime dependencies.
+#
+# Tested on Python 3.9-3.12. Every package below is actually imported by the
+# project; nothing is listed speculatively.
 
-ultralytics~=8.3.169
+# Detection. Ultralytics pulls in torch, torchvision and pillow itself, so the
+# torch version is left to it rather than pinned twice and fought over.
+ultralytics>=8.3.0,<9
+
+# Video capture, drawing and JPEG encoding.
+opencv-python>=4.8.0
+
+# Array handling for frame composition.
+numpy>=1.24,<3
+
+# config.yaml parsing.
+PyYAML>=6.0
+
+# Admin dashboard.
+Flask>=3.0
+
+# Desktop notification channel. Without it the system still runs; the desktop
+# channel logs a warning and email alerts continue to work.
+plyer>=2.1
+
+# The test suite uses only the standard library:
+#     python -m unittest discover -s tests -t .

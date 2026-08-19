@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Event log &middot; Smart Surveillance System{% endblock %}
+
+{% block content %}
+<section class="section-head">
+  <h2>Event log</h2>
+  <form class="filters" method="get">
+    <label>
+      Camera
+      <select name="camera">
+        <option value="">All</option>
+        {% for camera in cameras %}
+        <option value="{{ camera.id }}" {{ 'selected' if selected_camera == camera.id }}>
+          {{ camera.name }}
+        </option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      Severity
+      <select name="severity">
+        <option value="">All</option>
+        {% for level in ['critical', 'warning', 'info'] %}
+        <option value="{{ level }}" {{ 'selected' if selected_severity == level }}>
+          {{ level }}
+        </option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      Show
+      <input type="number" name="limit" min="10" max="500" step="10" value="{{ limit }}">
+    </label>
+    <button type="submit">Apply</button>
+  </form>
+</section>
+
+{% if alerts %}
+<div class="table-wrap">
+  <table class="log">
+    <thead>
+      <tr>
+        <th>#</th><th>Time</th><th>Camera</th><th>Event</th>
+        <th>Severity</th><th class="num">Confidence</th><th>Detail</th>
+        <th>Snapshot</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for alert in alerts %}
+      <tr class="sev-{{ alert.severity }} {{ 'acked' if alert.acknowledged }}">
+        <td class="num">{{ alert.id }}</td>
+        <td class="nowrap">{{ alert.at | clock }}</td>
+        <td>{{ alert.camera_id }}</td>
+        <td>{{ alert.event_type.replace('_', ' ') }}</td>
+        <td><span class="sev">{{ alert.severity }}</span></td>
+        <td class="num">{{ '%.0f%%' % (alert.confidence * 100) }}</td>
+        <td>{{ alert.detail }}</td>
+        <td>
+          {% if alert.snapshot %}
+          <a href="{{ url_for('snapshot', filename=alert.snapshot) }}">view</a>
+          {% else %}&mdash;{% endif %}
+        </td>
+        <td>
+          {% if alert.acknowledged %}
+          <span class="acked-tag">acked</span>
+          {% else %}
+          <form method="post" action="{{ url_for('acknowledge', alert_id=alert.id) }}">
+            <button type="submit">Ack</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="note">
+  Showing {{ alerts | length }} record(s). Snapshots older than the retention
+  window are deleted automatically along with their log entries.
+</p>
+{% else %}
+<p class="empty">No alerts match this filter.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,5 @@
+run,architecture,epochs,batch,best_epoch,precision,recall,mAP50,mAP50_95,wall_clock_s
+yolo11n-fire,yolo11n.pt,40,64,38,0.5372,0.4582,0.4583,0.1995,2722.5
+yolo11n-gun,yolo11n.pt,60,32,60,0.8785,0.7282,0.836,0.7103,2088.6
+yolo12n-fire,yolo12n.pt,40,64,38,0.5155,0.4521,0.4305,0.1772,2578.5
+yolo12n-gun,yolo12n.pt,60,32,57,0.8765,0.7039,0.842,0.6958,1916.2

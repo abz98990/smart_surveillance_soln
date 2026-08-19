@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Live &middot; Smart Surveillance System{% endblock %}
+
+{% block content %}
+<section class="stats">
+  <div class="stat">
+    <span class="label">Cameras online</span>
+    <span class="value">{{ status.cameras | selectattr('live') | list | length }}<span class="of">/{{ status.cameras | length }}</span></span>
+  </div>
+  <div class="stat {{ 'attention' if status.unacknowledged }}">
+    <span class="label">Unacknowledged</span>
+    <span class="value">{{ status.unacknowledged }}</span>
+  </div>
+  <div class="stat">
+    <span class="label">Critical logged</span>
+    <span class="value">{{ severity_counts.get('critical', 0) }}</span>
+  </div>
+  <div class="stat">
+    <span class="label">Warnings logged</span>
+    <span class="value">{{ severity_counts.get('warning', 0) }}</span>
+  </div>
+</section>
+
+<section class="cameras">
+  {% for camera in status.cameras %}
+  <article class="camera">
+    <header>
+      <h2>{{ camera.name }}</h2>
+      <span class="pill {{ 'live' if camera.live else 'down' }}">
+        {{ 'LIVE' if camera.live else 'OFFLINE' }}
+      </span>
+    </header>
+    <div class="feed">
+      {% if camera.live %}
+        <img src="{{ url_for('stream', camera_id=camera.id) }}"
+             alt="Annotated live feed from {{ camera.name }}">
+      {% else %}
+        <p class="offline">
+          No signal from <code>{{ camera.source }}</code>
+          {% if camera.error %}<br><span class="err">{{ camera.error }}</span>{% endif %}
+        </p>
+      {% endif %}
+    </div>
+    <footer class="meta">
+      <span>{{ camera.fps }} fps processed</span>
+      <span>{{ camera.frames }} frames</span>
+      <span>{{ camera.tracks }} tracked</span>
+      <span>{{ 'network' if camera.network else 'usb' }}</span>
+    </footer>
+  </article>
+  {% else %}
+  <p class="empty">No cameras enabled. Add one in <code>config.yaml</code>.</p>
+  {% endfor %}
+</section>
+
+<section class="recent">
+  <header class="section-head">
+    <h2>Recent alerts</h2>
+    <a href="{{ url_for('events') }}">Full log &rarr;</a>
+  </header>
+
+  {% if alerts %}
+  <ul class="alert-list">
+    {% for alert in alerts %}
+    <li class="alert sev-{{ alert.severity }} {{ 'acked' if alert.acknowledged }}">
+      {% if alert.snapshot %}
+      <a class="thumb" href="{{ url_for('snapshot', filename=alert.snapshot) }}">
+        <img src="{{ url_for('snapshot', filename=alert.snapshot) }}" alt="Snapshot for alert {{ alert.id }}">
+      </a>
+      {% else %}
+      <span class="thumb blank" aria-hidden="true"></span>
+      {% endif %}
+
+      <div class="body">
+        <p class="headline">
+          <span class="sev">{{ alert.severity }}</span>
+          {{ alert.event_type.replace('_', ' ') }}
+        </p>
+        <p class="detail">{{ alert.detail }}</p>
+        <p class="when">{{ alert.camera_id }} &middot; {{ alert.at | clock }} &middot; {{ alert.at | ago }}</p>
+      </div>
+
+      {% if not alert.acknowledged %}
+      <form method="post" action="{{ url_for('acknowledge', alert_id=alert.id) }}">
+        <button type="submit">Acknowledge</button>
+      </form>
+      {% else %}
+      <span class="acked-tag">acknowledged</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty">Nothing logged yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

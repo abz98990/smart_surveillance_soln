@@ -1,0 +1,106 @@
+[
+  {
+    "run": "yolo11n-fire",
+    "architecture": "yolo11n.pt",
+    "dataset": "/content/gdrive/MyDrive/fire_training_data/fire_data.yaml",
+    "epochs": 40,
+    "batch": "64",
+    "imgsz": "640",
+    "optimizer": "auto",
+    "lr0": "0.01",
+    "seed": "0",
+    "wall_clock_s": 2722.5,
+    "best": {
+      "epoch": 38,
+      "precision": 0.5372,
+      "recall": 0.4582,
+      "mAP50": 0.4583,
+      "mAP50_95": 0.1995
+    },
+    "final": {
+      "epoch": 40,
+      "precision": 0.4992,
+      "recall": 0.4829,
+      "mAP50": 0.4565,
+      "mAP50_95": 0.1941
+    }
+  },
+  {
+    "run": "yolo11n-gun",
+    "architecture": "yolo11n.pt",
+    "dataset": "/content/gdrive/MyDrive/gun_training_data/gun_data.yaml",
+    "epochs": 60,
+    "batch": "32",
+    "imgsz": "640",
+    "optimizer": "auto",
+    "lr0": "0.01",
+    "seed": "0",
+    "wall_clock_s": 2088.6,
+    "best": {
+      "epoch": 60,
+      "precision": 0.8785,
+      "recall": 0.7282,
+      "mAP50": 0.836,
+      "mAP50_95": 0.7103
+    },
+    "final": {
+      "epoch": 60,
+      "precision": 0.8785,
+      "recall": 0.7282,
+      "mAP50": 0.836,
+      "mAP50_95": 0.7103
+    }
+  },
+  {
+    "run": "yolo12n-fire",
+    "architecture": "yolo12n.pt",
+    "dataset": "/content/gdrive/MyDrive/fire_training_data/fire_data.yaml",
+    "epochs": 40,
+    "batch": "64",
+    "imgsz": "640",
+    "optimizer": "auto",
+    "lr0": "0.01",
+    "seed": "0",
+    "wall_clock_s": 2578.5,
+    "best": {
+      "epoch": 38,
+      "precision": 0.5155,
+      "recall": 0.4521,
+      "mAP50": 0.4305,
+      "mAP50_95": 0.1772
+    },
+    "final": {
+      "epoch": 40,
+      "precision": 0.4713,
+      "recall": 0.4786,
+      "mAP50": 0.4254,
+      "mAP50_95": 0.175
+    }
+  },
+  {
+    "run": "yolo12n-gun",
+    "architecture": "yolo12n.pt",
+    "dataset": "/content/gdrive/MyDrive/gun_training_data/gun_data.yaml",
+    "epochs": 60,
+    "batch": "32",
+    "imgsz": "640",
+    "optimizer": "auto",
+    "lr0": "0.01",
+    "seed": "0",
+    "wall_clock_s": 1916.2,
+    "best": {
+      "epoch": 57,
+      "precision": 0.8765,
+      "recall": 0.7039,
+      "mAP50": 0.842,
+      "mAP50_95": 0.6958
+    },
+    "final": {
+      "epoch": 60,
+      "precision": 0.8776,
+      "recall": 0.7136,
+      "mAP50": 0.8381,
+      "mAP50_95": 0.6928
+    }
+  }
+]
