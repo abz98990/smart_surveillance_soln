@@ -1,17 +1,10 @@
 #!/usr/bin/env python3
-"""Read training provenance straight out of the model checkpoints.
+"""Training provenance read straight out of the .pt files.
 
-Every Ultralytics ``.pt`` embeds the arguments it was trained with and the
-metrics of the epoch it was saved at. Recovering them here means the report's
-Chapter IV numbers are reproducible from the artefacts rather than from
-memory - a marker can run this and get the same table.
+    python tools/inspect_models.py [--json]
 
-Deliberately does not import torch. A ``.pt`` is a zip containing a pickle, and
-the pickle is walked with a restricted unpickler that stubs out every tensor,
-so this runs on any machine with a stdlib Python.
-
-    python tools/inspect_models.py
-    python tools/inspect_models.py --json > docs/results/model_provenance.json
+A checkpoint is a zip around a pickle, so this walks it with a restricted
+unpickler that stubs every tensor. No torch needed.
 """
 
 import argparse

@@ -1,9 +1,4 @@
-"""Per-class confidence thresholds.
-
-The fire checkpoint's two classes perform very differently (AP@50 0.648 for
-fire, 0.269 for smoke), so they must be able to sit at different operating
-points. These tests exercise that without loading a model.
-"""
+"""Per-class confidence thresholds, exercised without loading a model."""
 
 import unittest
 
@@ -30,8 +25,8 @@ class ThresholdTests(unittest.TestCase):
         self.assertAlmostEqual(self.bundle.threshold_for(self.cfg, "steam"), 0.50)
 
     def test_inference_floor_is_the_lowest_threshold_needed(self):
-        # Inference must run low enough that no class is discarded before its
-        # own threshold can be applied.
+        # Must run low enough that no class is dropped before its own
+        # threshold is applied.
         self.assertAlmostEqual(self.bundle._inference_floor(self.cfg), 0.50)
 
         low = DetectorConfig(id="x", weights="w.pt", conf=0.60,
@@ -55,7 +50,7 @@ class ShippedConfigTests(unittest.TestCase):
         thresholds = fire.class_conf_map
         self.assertIn("smoke", thresholds)
         self.assertGreater(thresholds["smoke"], thresholds.get("fire", fire.conf),
-                           "smoke validates far worse than fire and must be stricter")
+                           "smoke validates far worse than fire")
 
 
 class DetectionGeometryTests(unittest.TestCase):

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Generate the six UML figures for the report.
+"""Regenerates the six UML figures into docs/diagrams/ as SVG and PNG.
 
     python tools/make_diagrams.py
 
-Writes an .svg (editable) and a .png (for the document) per figure into
-docs/diagrams/. Regenerate after any architectural change so the figures cannot
-drift away from the code again.
+Run this after any architectural change, so the figures cannot drift away from
+the code the way the earlier hand-drawn ones did.
 """
 
 import sys

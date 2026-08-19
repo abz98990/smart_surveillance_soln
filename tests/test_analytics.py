@@ -1,4 +1,4 @@
-"""Behavioural analytics: weapon association, loitering, hazard events."""
+"""Weapon association, loitering, and hazard events."""
 
 import unittest
 
@@ -32,7 +32,7 @@ class ContainmentTests(unittest.TestCase):
         self.assertAlmostEqual(containment(inner, outer), 0.5)
 
     def test_iou_would_have_missed_this(self):
-        """The case that motivates using containment instead of IoU."""
+        # Why containment is used instead of IoU.
         inner = handgun((150, 300, 175, 320))
         outer = person((100, 200, 250, 600))
         self.assertAlmostEqual(containment(inner, outer), 1.0)

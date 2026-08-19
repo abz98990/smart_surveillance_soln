@@ -1,17 +1,12 @@
-# Smart Surveillance System - operator configuration.
-#
-# Nothing secret belongs in this file. SMTP credentials and the dashboard bind
-# address are read from the environment; see .env.example.
+# Operator settings. Secrets go in .env, never here.
 
 cameras:
   - id: cam-01
     name: Primary USB camera
-    source: 0            # integer = local device index
+    source: 0                # int = USB device index, URL = network stream
     enabled: true
-    process_fps: 10      # inference rate; capture still runs at native fps
+    process_fps: 10
 
-  # A network camera is attached by giving its stream URL instead of an index.
-  # Disabled by default so a fresh checkout runs on the built-in webcam alone.
   - id: cam-02
     name: Wi-Fi camera (east corridor)
     source: "rtsp://192.168.1.50:554/stream1"
@@ -19,32 +14,25 @@ cameras:
     process_fps: 6
 
 detectors:
-  # Weights are the *best* checkpoint from each training run, not the last.
   - id: person
     weights: weights_people/best.pt
     conf: 0.40
-    colour: [0, 225, 0]        # BGR - green
+    colour: [0, 225, 0]
     enabled: true
 
   - id: weapon
     weights: weights_gun/best.pt
     conf: 0.40
-    colour: [0, 0, 225]        # BGR - red
+    colour: [0, 0, 225]
     enabled: true
 
   - id: fire
     weights: weights_fire/best.pt
-    # Raised above the 0.25 library default: this model validates at precision
-    # 0.537 overall, so at a low threshold roughly half of what it proposes is
-    # wrong. See docs/MODEL_CARD.md.
     conf: 0.50
-    colour: [225, 0, 0]        # BGR - blue
+    colour: [225, 0, 0]
     enabled: true
-    # The two classes do not perform alike. On the validation set the fire
-    # class reaches AP@50 = 0.648 while smoke reaches only 0.269, and smoke
-    # recall is 0.30 - it misses roughly seven of every ten smoke instances.
-    # Holding smoke to a much higher bar keeps the usable fire detections
-    # without paying for smoke's false positives.
+    # Smoke validates at AP@50 0.269 against fire's 0.648, and only finds three
+    # of every ten instances, so it earns a much higher bar. See docs/MODEL_CARD.md.
     class_conf:
       fire: 0.50
       smoke: 0.70
@@ -55,9 +43,8 @@ analytics:
   track_timeout_seconds: 3.0
   weapon_person_overlap: 0.30
 
-# One rule per analytics event. `min_consecutive_frames` is the false-positive
-# guard: the condition must hold across that many processed frames before an
-# operator is disturbed. `cooldown_seconds` then suppresses repeats.
+# min_consecutive_frames is the false-positive guard; cooldown_seconds then
+# suppresses repeats of the same event on the same camera.
 rules:
   - event: weapon_detected
     severity: critical
@@ -74,8 +61,7 @@ rules:
   - event: fire_detected
     severity: critical
     cooldown_seconds: 60
-    # Held to four frames because of this model's precision; a genuine fire
-    # persists across frames, a reflection or a red object usually does not.
+    # Four frames: a real fire persists, a red object or reflection usually does not.
     min_consecutive_frames: 4
     channels: [desktop, email]
 
@@ -94,8 +80,7 @@ rules:
 storage:
   db_path: data/surveillance.db
   snapshot_dir: data/snapshots
-  # Only frames that raised an alert are ever written to disk.
-  save_snapshots: true
+  save_snapshots: true       # only frames that raised an alert are ever written
   retention_days: 30
 
 web:

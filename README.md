@@ -95,8 +95,8 @@ positive.
 
 `yolo11n` was chosen over `yolo12n` on evidence, not assertion: trained on the
 same data with the same seed, YOLO11n leads mAP@50-95 by 11.2% on fire and 2.0%
-on handguns. The comparison checkpoints are kept in `weights_gun_v12/` and
-`weights_fire_v12/`.
+on handguns. The run data is in `docs/training_runs/`; regenerate the table with
+`python tools/summarise_runs.py`.
 
 ## Alerts
 
@@ -205,7 +205,6 @@ surveillance/           the system
 tests/                  unit tests
 tools/                  evaluation and provenance
 docs/                   model card, diagrams, evidence, training runs, results
-legacy/                 archived prototypes, see legacy/README.md
 weights_*/, new/        trained checkpoints
 imgs/                   captured frames (git-ignored: may contain personal data)
 ```

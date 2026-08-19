@@ -40,10 +40,10 @@ IDs match the review so the two can be read side by side.
 
 | ID | Finding | Resolution |
 |---|---|---|
-| CODE-1 | `4window.py` panels shared one buffer (`a = b = c = frame`) | Fixed in the archived script with `.copy()` per panel; the replacement renderer (`surveillance/render.py`) copies by default. |
+| CODE-1 | `4window.py` panels shared one buffer (`a = b = c = frame`) | The replacement renderer (`surveillance/render.py`) copies per panel by default. |
 | CODE-2 | `second_main.py` raised `TypeError` on first detection; `q` could not quit | Rewritten: integer box coordinates, display and key handling moved into the frame loop. |
 | CODE-3 | Alert path slept 1 s inside the capture loop, no cooldown, placeholder text | `AlertManager` debounces on consecutive frames, applies a per-event cooldown, and dispatches on a worker thread. A test asserts `submit()` returns in under 200 ms even with a channel that sleeps for a second, and that 100 alerting frames produce one alert. |
-| CODE-4 | Fire and smoke never raised an alert | Both are now first-class events with their own rules. Also fixed in the archived `1window.py`. |
+| CODE-4 | Fire and smoke never raised an alert | Both are now first-class events with their own rules. |
 | CODE-5 | Scripts disagreed on models; loaded `last.pt`; ignored the trained person model | One entry point (`run.py`), one config. A test asserts every configured detector uses `best.pt`. |
 | CODE-6 | `requirements.txt` listed TensorFlow, Keras, Flask, mtcnn… none imported; `plyer` missing | Rewritten to the six packages actually used. |
 | CODE-7 | `new.py` pointed at a non-existent directory; invisible label at `(0,0)`; hard-coded class names; inconsistent thresholds; stretched aspect ratio | All fixed. Class names now read from `model.names`; `surveillance/geometry.py` letterboxes instead of stretching; thresholds live in one config. |
@@ -56,7 +56,7 @@ IDs match the review so the two can be read side by side.
 |---|---|---|
 | PERF-1 | Fire model false-positives at 84% on a handgun photo | Root-caused with the archived run artefacts: the validation confusion matrix shows **260 background regions classified as fire** against 649 genuine fire instances. Documented in `docs/MODEL_CARD.md`; the image is preserved at `docs/evidence/fire-false-positive-on-handgun.jpg`. Mitigations: threshold 0.50, four consecutive frames, `warning` severity for smoke. `tools/evaluate.py --confusion` finds the whole class of error. |
 | PERF-4 | **New, from the run artefacts:** the fire model's aggregate mAP hid a large per-class split | The PR curve gives `fire` AP@50 = 0.648 but `smoke` = 0.269, and smoke recall is 0.303. Reporting one number for both was misleading. Per-class confidence thresholds were added to `DetectorConfig`/`DetectorBundle`, and `config.yaml` now runs fire at 0.50 and smoke at 0.70. Eight new tests cover it. |
-| PERF-5 | **New:** the architecture choice had no supporting evidence | The archived runs include a controlled YOLO11n vs YOLO12n comparison — same datasets, epochs, batch and seed. YOLO11n leads mAP@50-95 by 11.2% (fire) and 2.0% (handgun); YOLO12n is 0.7% ahead on handgun mAP@50 only, and trains 6-8% faster. `tools/summarise_runs.py` regenerates the tables. YOLO12n checkpoints kept at `weights_gun_v12/`, `weights_fire_v12/`. |
+| PERF-5 | **New:** the architecture choice had no supporting evidence | The archived runs include a controlled YOLO11n vs YOLO12n comparison — same datasets, epochs, batch and seed. YOLO11n leads mAP@50-95 by 11.2% (fire) and 2.0% (handgun); YOLO12n is 0.7% ahead on handgun mAP@50 only, and trains 6-8% faster. `tools/summarise_runs.py` regenerates the tables from `docs/training_runs/`. |
 | PERF-2 | Face model checkpoint is degenerate (P 0.350 at R 1.000) | Documented in the model card with the reason (fitness-based selection). Not used by the system. |
 | PERF-3 | All metrics are validation, not held-out | `tools/evaluate.py --validate` added for a proper test split. The model card states plainly that the current numbers are validation metrics and must not be quoted as generalisation performance. |
 | METH-1 | All test evidence is a webcam pointed at a monitor | Flagged in the model card. A real held-out set still has to be collected — see "Still outstanding". |
@@ -126,8 +126,32 @@ byte-identical to the ones already in the project. What it added was evidence.
 | PR / F1 / P / R curves | same | **Per-class AP** — the finding that reshaped the fire configuration |
 | Confusion matrices | same | Exact validation instance counts and false-positive counts |
 | `results.png`, `labels.jpg` | same | Ready-made figures for Chapter IV |
-| YOLO12n checkpoints | `weights_*_v12/` | The architecture comparison |
+| YOLO12n run data | `docs/training_runs/yolo12n-*/` | The architecture comparison |
 
 Two findings came out of it that the earlier review could not have reached:
 the fire/smoke per-class split (PERF-4) and the YOLO11n vs YOLO12n
 comparison (PERF-5). Both are in the model card.
+
+
+---
+
+## Trimmed for the production build
+
+Removed once the evidence had been extracted into the model card and
+`docs/results/`. All of it remains in git history.
+
+| Removed | Why |
+|---|---|
+| `legacy/` (8 prototypes + sample images) | Superseded by `surveillance/`; the defect list above is the useful residue |
+| `weights_gun_v12/`, `weights_fire_v12/` | Comparison checkpoints. The numbers are in the model card and the run data in `docs/training_runs/yolo12n-*/` |
+| `yolo11n/s/m/l.pt`, `yolov8s.pt` (~130 MB) | Stock downloads nothing referenced; Ultralytics fetches them on demand |
+| `P_curve`, `R_curve`, `F1_curve`, `labels.jpg`, normalised confusion matrices | Kept only the figures the report actually cites |
+
+`new/best.pt` was **kept**. It is an original project artefact rather than a
+comparison run, and Future Work discusses it.
+
+Source comments were cut back at the same time, from 1,958 to 1,755 lines
+across the package: docstrings reduced to one line where the name already says
+it, and inline comments kept only where they explain a decision the code cannot
+(the aliasing bug in `render.annotate`, the sqlite `closing()` requirement, the
+per-class threshold rationale, the lazy imports).

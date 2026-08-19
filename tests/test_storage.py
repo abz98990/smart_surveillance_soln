@@ -1,4 +1,4 @@
-"""Event log persistence and the snapshot retention policy."""
+"""Event log persistence and snapshot retention."""
 
 import tempfile
 import time

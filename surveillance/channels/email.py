@@ -1,9 +1,4 @@
-"""Email alert channel.
-
-Credentials come from the environment only - see ``.env.example``. Nothing in
-this module has a default account, and the channel disables itself rather than
-guessing if it is not configured.
-"""
+"""Email alerts. Credentials come from the environment only."""
 
 import logging
 import smtplib

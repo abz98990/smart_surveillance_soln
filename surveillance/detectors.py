@@ -1,9 +1,4 @@
-"""YOLO inference wrapper.
-
-Ultralytics is imported lazily inside :meth:`DetectorBundle.load` so that the
-rest of the package - analytics, alerting, storage - can be imported and tested
-on a machine with no PyTorch installed.
-"""
+"""YOLO model loading and inference."""
 
 import logging
 import time
@@ -14,12 +9,10 @@ log = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class Detection:
-    """One box produced by one detector."""
-
-    detector: str          # which DetectorConfig produced it, e.g. "weapon"
-    label: str             # the model's own class name, e.g. "Handgun"
+    detector: str
+    label: str
     confidence: float
-    box: tuple             # (x1, y1, x2, y2) as ints, in frame pixel space
+    box: tuple
 
     @property
     def centroid(self):
@@ -32,7 +25,6 @@ class Detection:
         return max(0, x2 - x1) * max(0, y2 - y1)
 
     def iou(self, other):
-        """Intersection over union with another detection's box."""
         ax1, ay1, ax2, ay2 = self.box
         bx1, by1, bx2, by2 = other.box
         ix1, iy1 = max(ax1, bx1), max(ay1, by1)
@@ -45,22 +37,14 @@ class Detection:
 
 
 class DetectorBundle:
-    """Holds every enabled model and runs them over a frame.
-
-    The models are independent single-purpose networks rather than one
-    multi-class network, which is what the three separate training runs
-    produced. Running them in sequence is the honest cost of that choice and is
-    measured by :func:`tools.evaluate.benchmark_latency`.
-    """
+    """The enabled models, run in sequence over each frame."""
 
     def __init__(self, detector_configs):
         self.configs = tuple(d for d in detector_configs if d.enabled)
         self._models = {}
         self._loaded = False
-        # Confidence thresholds an operator has changed from the dashboard.
-        # Kept separate from the frozen config so a restart returns to the
-        # reviewed defaults in config.yaml rather than to whatever was last
-        # tried at 3am.
+        # Dashboard tweaks live here, not in the frozen config, so a restart
+        # goes back to the reviewed defaults.
         self._conf_overrides = {}
 
     def confidence(self, detector_id):
@@ -70,17 +54,16 @@ class DetectorBundle:
         return self._conf_overrides.get(detector_id, cfg.conf)
 
     def set_confidence(self, detector_id, value):
-        """Override one detector's threshold for this run. Returns the value set."""
         value = max(0.01, min(0.99, float(value)))
         self._conf_overrides[detector_id] = value
         log.info("confidence for %s set to %.2f", detector_id, value)
         return value
 
     def load(self):
-        """Import ultralytics and instantiate every enabled model."""
         if self._loaded:
             return
-        from ultralytics import YOLO  # noqa: PLC0415 - deliberately lazy
+        # Imported here so the rest of the package works without PyTorch.
+        from ultralytics import YOLO
 
         for cfg in self.configs:
             log.info("loading detector %s from %s", cfg.id, cfg.weights)
@@ -92,31 +75,21 @@ class DetectorBundle:
         return dict(model.names) if model else {}
 
     def threshold_for(self, cfg, label):
-        """Confidence a detection of ``label`` must clear.
-
-        A model's classes rarely perform alike. The fire checkpoint validates at
-        AP@50 = 0.648 for `fire` but only 0.269 for `smoke`, so holding both to
-        one number either floods the operator with smoke false positives or
-        throws away usable fire detections. Per-class thresholds let each class
-        sit at its own operating point.
-        """
+        """Classes in one model can need very different thresholds - fire
+        validates at AP 0.648, smoke at 0.269."""
         base = self.confidence(cfg.id)
         if not cfg.class_conf:
             return base
         return float(cfg.class_conf_map.get(str(label).lower(), base))
 
     def _inference_floor(self, cfg):
-        """Lowest threshold any class needs, so nothing is discarded too early."""
         base = self.confidence(cfg.id)
         if not cfg.class_conf:
             return base
         return min([base] + list(cfg.class_conf_map.values()))
 
     def detect(self, frame):
-        """Run every enabled model over ``frame``.
-
-        Returns ``(detections, elapsed_ms_by_detector)``.
-        """
+        """Returns (detections, elapsed_ms_by_detector)."""
         if not self._loaded:
             self.load()
 
@@ -133,9 +106,8 @@ class DetectorBundle:
                 class_id = int(class_id)
                 if cfg.keep_classes and class_id not in cfg.keep_classes:
                     continue
-                # Always read the label from the checkpoint. Hard-coding class
-                # order silently breaks whenever a model is retrained with a
-                # different data.yaml.
+                # Read the name from the checkpoint; hard-coding class order
+                # breaks silently on retrain.
                 label = model.names[class_id]
                 if float(confidence) < self.threshold_for(cfg, label):
                     continue

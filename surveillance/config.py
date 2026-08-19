@@ -1,9 +1,4 @@
-"""Configuration loading for the Smart Surveillance System.
-
-Everything the operator can tune lives in ``config.yaml``; everything secret
-lives in the environment (see ``.env.example``).  Nothing sensitive is ever
-written to the config file, so the file is safe to commit.
-"""
+"""Settings from config.yaml, secrets from the environment."""
 
 import os
 from dataclasses import dataclass, field, replace
@@ -17,19 +12,11 @@ DEFAULT_CONFIG_PATH = PROJECT_ROOT / "config.yaml"
 
 @dataclass(frozen=True)
 class CameraConfig:
-    """One video source.
-
-    ``source`` is passed straight to ``cv2.VideoCapture``: an integer for a
-    local USB device, or a string for a file path or an RTSP/HTTP URL, which
-    is how the Wi-Fi cameras are attached.
-    """
-
     id: str
     name: str
+    # Passed straight to cv2.VideoCapture: an int for USB, a URL for RTSP.
     source: object = 0
     enabled: bool = True
-    # Frames per second to *process*. The camera is still read at its native
-    # rate; surplus frames are dropped so a slow model cannot back up the queue.
     process_fps: float = 10.0
 
     @property
@@ -39,18 +26,12 @@ class CameraConfig:
 
 @dataclass(frozen=True)
 class DetectorConfig:
-    """One YOLO model and how its boxes are drawn."""
-
     id: str
     weights: str
     conf: float = 0.4
     enabled: bool = True
-    # BGR, because that is what OpenCV draws with.
-    colour: tuple = (0, 225, 0)
-    # Restrict to these class ids; empty means "keep everything the model emits".
+    colour: tuple = (0, 225, 0)  # BGR, as OpenCV wants it
     keep_classes: tuple = ()
-    # Per-class confidence overrides, keyed by lower-cased class name. Classes
-    # within one model rarely perform alike; see docs/MODEL_CARD.md.
     class_conf: tuple = ()
 
     @property
@@ -60,29 +41,18 @@ class DetectorConfig:
 
 @dataclass(frozen=True)
 class AlertRule:
-    """Maps an analytics event type onto a severity and a cooldown."""
-
     event: str
     severity: str = "warning"
-    # Suppress repeats of the same event on the same camera for this long.
     cooldown_seconds: float = 30.0
-    # Require the condition to hold for this many consecutive processed frames
-    # before firing, which is what stops single-frame false positives paging
-    # an operator.
     min_consecutive_frames: int = 3
     channels: tuple = ("desktop",)
 
 
 @dataclass(frozen=True)
 class AnalyticsConfig:
-    # A person whose centroid stays inside ``loiter_radius_px`` for longer than
-    # this many seconds is loitering.
     loiter_seconds: float = 20.0
     loiter_radius_px: float = 80.0
-    # Tracks are forgotten this long after they were last seen.
     track_timeout_seconds: float = 3.0
-    # Minimum fraction of a weapon box that must fall inside a person box
-    # before the two are treated as "this person is carrying it".
     weapon_person_overlap: float = 0.30
 
 
@@ -90,17 +60,12 @@ class AnalyticsConfig:
 class StorageConfig:
     db_path: str = "data/surveillance.db"
     snapshot_dir: str = "data/snapshots"
-    # Only frames attached to an alert are written to disk. Everything else is
-    # discarded as soon as it has been processed, which is the retention
-    # behaviour the ethics section commits to.
     save_snapshots: bool = True
     retention_days: int = 30
 
 
 @dataclass(frozen=True)
 class EmailConfig:
-    """Read from the environment only - never from config.yaml."""
-
     host: str = ""
     port: int = 587
     username: str = ""
@@ -137,7 +102,6 @@ class EmailConfig:
 class WebConfig:
     host: str = "127.0.0.1"
     port: int = 8000
-    # JPEG quality for the dashboard stream. Lower means less bandwidth.
     stream_quality: int = 75
 
     @classmethod
@@ -183,11 +147,7 @@ class AppConfig:
 
 
 def _load_dotenv(path):
-    """Minimal .env reader so the project has no python-dotenv dependency.
-
-    Values already present in the real environment win, so an operator can
-    always override the file from the shell.
-    """
+    """Read .env, but never override a variable already set in the shell."""
     if not path.exists():
         return
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -202,7 +162,6 @@ def _load_dotenv(path):
 
 
 def load_config(path=None, load_env=True):
-    """Build an :class:`AppConfig` from ``config.yaml`` plus the environment."""
     path = Path(path) if path else DEFAULT_CONFIG_PATH
     if load_env:
         _load_dotenv(PROJECT_ROOT / ".env")
@@ -246,16 +205,12 @@ def load_config(path=None, load_env=True):
         for r in raw.get("rules", [])
     )
 
-    analytics = AnalyticsConfig(**(raw.get("analytics") or {}))
-    storage = StorageConfig(**(raw.get("storage") or {}))
-    web = WebConfig.from_env(WebConfig(**(raw.get("web") or {})))
-
     return AppConfig(
         cameras=cameras,
         detectors=detectors,
         rules=rules,
-        analytics=analytics,
-        storage=storage,
+        analytics=AnalyticsConfig(**(raw.get("analytics") or {})),
+        storage=StorageConfig(**(raw.get("storage") or {})),
         email=EmailConfig.from_env(),
-        web=web,
+        web=WebConfig.from_env(WebConfig(**(raw.get("web") or {}))),
     )

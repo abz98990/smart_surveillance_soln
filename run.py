@@ -19,9 +19,8 @@ from surveillance.channels import build_channels
 from surveillance.config import PROJECT_ROOT, load_config
 from surveillance.storage import EventStore
 
-# surveillance.pipeline pulls in OpenCV, so it is imported inside main(). That
-# keeps `--check` usable on a fresh clone before the heavy dependencies are
-# installed, which is exactly when someone most wants to run it.
+# surveillance.pipeline is imported inside main(): it pulls in OpenCV, and
+# --check needs to work on a fresh clone before that is installed.
 
 log = logging.getLogger("surveillance")
 
@@ -106,7 +105,7 @@ def check_config(config):
 
 
 def run_display_loop(service, stop_signal):
-    """Optional local window: every camera tiled into one canvas."""
+    """Optional local window, every camera tiled into one canvas."""
     import cv2
     import numpy as np
 
@@ -192,7 +191,7 @@ def main(argv=None):
                 ).start()
 
             log.info("dashboard on http://%s:%d", config.web.host, config.web.port)
-            # threaded=True so one open MJPEG stream cannot block the other routes.
+            # threaded, or one open MJPEG stream blocks every other route
             app.run(host=config.web.host, port=config.web.port,
                     threaded=True, debug=False, use_reloader=False)
     finally:

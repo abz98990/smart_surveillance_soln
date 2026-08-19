@@ -1,27 +1,11 @@
-# Smart Surveillance System - runtime dependencies.
-#
-# Tested on Python 3.9-3.12. Every package below is actually imported by the
-# project; nothing is listed speculatively.
+# Tested on Python 3.9-3.12. Everything here is actually imported.
 
-# Detection. Ultralytics pulls in torch, torchvision and pillow itself, so the
-# torch version is left to it rather than pinned twice and fought over.
-ultralytics>=8.3.0,<9
-
-# Video capture, drawing and JPEG encoding.
+ultralytics>=8.3.0,<9      # pulls in torch, torchvision, pillow
 opencv-python>=4.8.0
-
-# Array handling for frame composition.
 numpy>=1.24,<3
-
-# config.yaml parsing.
 PyYAML>=6.0
-
-# Admin dashboard.
 Flask>=3.0
+plyer>=2.1                 # optional: without it, desktop alerts are skipped
 
-# Desktop notification channel. Without it the system still runs; the desktop
-# channel logs a warning and email alerts continue to work.
-plyer>=2.1
-
-# The test suite uses only the standard library:
-#     python -m unittest discover -s tests -t .
+# Tests use the standard library only:
+#   python -m unittest discover -s tests -t .

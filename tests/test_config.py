@@ -1,4 +1,4 @@
-"""Configuration loading, and the guarantee that no secret lives in a file."""
+"""Config loading, and the guarantee that no secret lives in a file."""
 
 import unittest
 from pathlib import Path
@@ -16,8 +16,6 @@ from surveillance.geometry import centre_offset, clamp_text_origin, fit_size, gr
 
 
 class ShippedConfigTests(unittest.TestCase):
-    """The config.yaml that ships with the project must actually work."""
-
     def setUp(self):
         self.config = load_config(load_env=False)
 
@@ -48,8 +46,7 @@ class ShippedConfigTests(unittest.TestCase):
             self.assertGreater(rule.cooldown_seconds, 0)
 
     def test_fire_is_held_to_a_stricter_threshold(self):
-        """The fire model validates at precision 0.537, so it must not run at
-        the 0.25 library default the original scripts used."""
+        # Precision 0.537 - must not run at the 0.25 library default.
         fire = self.config.detector("fire")
         self.assertIsNotNone(fire)
         self.assertGreaterEqual(fire.conf, 0.5)
@@ -61,7 +58,7 @@ class ShippedConfigTests(unittest.TestCase):
 
 class SecretHygieneTests(unittest.TestCase):
     def test_config_yaml_declares_no_credential_keys(self):
-        """Comments may discuss secrets; no *key* may hold one."""
+        # Comments may mention secrets; no key may hold one.
         raw = (PROJECT_ROOT / "config.yaml").read_text(encoding="utf-8")
         keys = []
         for line in raw.splitlines():
@@ -147,8 +144,6 @@ class GeometryTests(unittest.TestCase):
         self.assertEqual(grid_shape(0), (0, 0))
 
     def test_text_origin_is_pushed_inside_the_frame(self):
-        # (0, 0) is the classic invisible-label bug: the baseline sits on the
-        # top edge so every glyph renders above it.
         x, y = clamp_text_origin(0, 0, text_height=12)
         self.assertGreater(x, 0)
         self.assertGreaterEqual(y, 12)

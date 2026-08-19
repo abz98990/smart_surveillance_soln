@@ -1,17 +1,10 @@
 #!/usr/bin/env python3
-"""Summarise the archived training runs into report-ready tables.
+"""Turns docs/training_runs/ into report-ready tables.
 
-Reads every ``results.csv`` and ``args.yaml`` under ``docs/training_runs/`` and
-emits the epoch-level metrics, the best-epoch summary, and the architecture
-comparison. Everything it prints is derived from the run artefacts, so a marker
-can re-run it and get the same numbers.
+    python tools/summarise_runs.py [--markdown | --json | --write]
 
-    python tools/summarise_runs.py
-    python tools/summarise_runs.py --markdown > docs/results/run_comparison.md
-
-Ultralytics selects ``best.pt`` on a fitness score of
-``0.9 * mAP@50-95 + 0.1 * mAP@50``; the same rule is applied here so the
-"best" row matches the shipped checkpoint.
+"best" uses the same fitness rule Ultralytics does, 0.9*mAP@50-95 + 0.1*mAP@50,
+so the row matches the shipped checkpoint.
 """
 
 import argparse

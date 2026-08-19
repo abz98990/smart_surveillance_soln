@@ -1,9 +1,4 @@
-"""Alert debouncing, cooldown and dispatch.
-
-These are the tests that pin the alert-fatigue behaviour the report commits to:
-a detection on a single frame must not notify anyone, and a persistent threat
-must not notify anyone more than once per cooldown.
-"""
+"""Debouncing, cooldown and dispatch - the alert-fatigue guarantees."""
 
 import time
 import unittest
@@ -193,13 +188,11 @@ class DispatchTests(unittest.TestCase):
             elapsed = time.perf_counter() - started
         finally:
             manager.stop(timeout=2)
-        # The old code slept 1s inline per alerting frame. This must not.
+        # The old code slept 1s inline on every alerting frame.
         self.assertLess(elapsed, 0.2)
 
 
 class _D:
-    """Minimal stand-in for a Detection, for confidence comparisons."""
-
     def __init__(self, confidence):
         self.confidence = confidence
 

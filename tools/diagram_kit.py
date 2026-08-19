@@ -1,11 +1,7 @@
-"""A tiny drawing toolkit for the UML figures.
+"""Minimal drawing toolkit for the UML figures.
 
-The diagrams are defined once as a display list and rendered twice: to SVG,
-which stays editable, and to PNG, which is what goes into the report. Keeping
-one source removes the drift that let five spelling mistakes survive inside the
-previous diagram images, where no spell-checker could reach them.
-
-Only Pillow is required.
+Shapes are collected once and rendered twice, to SVG for editing and PNG for
+the document, so the two can never disagree. Pillow is the only dependency.
 """
 
 import html

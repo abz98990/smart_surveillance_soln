@@ -1,4 +1,4 @@
-"""Flask dashboard: live streams, the alert log, and runtime configuration."""
+"""Dashboard routes: live streams, the alert log, runtime settings."""
 
 import logging
 import time
@@ -22,7 +22,6 @@ PLACEHOLDER_WAIT = 0.5
 
 
 def _mjpeg(buffer):
-    """Yield an endless multipart stream from a camera's frame buffer."""
     while True:
         jpeg = buffer.wait_for_frame(timeout=2.0)
         if jpeg is None:
@@ -54,7 +53,6 @@ def create_app(service, store, config):
                 return "{:.0f}{} ago".format(seconds / unit, name)
         return "{:.0f}d ago".format(seconds / 86400)
 
-    # -- pages -------------------------------------------------------------
     @app.route("/")
     def dashboard():
         return render_template(
@@ -97,7 +95,7 @@ def create_app(service, store, config):
                 frames = request.form.get("frames_{}".format(event), type=int)
                 if cooldown is None and frames is None:
                     continue
-                from dataclasses import replace  # noqa: PLC0415
+                from dataclasses import replace
 
                 service.alerts.rules[event] = replace(
                     rule,
@@ -125,7 +123,6 @@ def create_app(service, store, config):
             saved=request.args.get("saved"),
         )
 
-    # -- media -------------------------------------------------------------
     @app.route("/stream/<camera_id>")
     def stream(camera_id):
         buffer = service.buffer(camera_id)
@@ -141,7 +138,6 @@ def create_app(service, store, config):
         # send_from_directory rejects traversal outside the snapshot folder.
         return send_from_directory(store.snapshot_dir, filename)
 
-    # -- actions and API ---------------------------------------------------
     @app.route("/alerts/<int:alert_id>/ack", methods=["POST"])
     def acknowledge(alert_id):
         store.acknowledge(alert_id)

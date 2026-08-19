@@ -1,16 +1,4 @@
-"""Alert decisioning and dispatch.
-
-Two problems are solved here.
-
-*Alert fatigue.* A raw detector fires on every frame, so a weapon held in view
-for ten seconds at 10 fps is a hundred notifications. Every event must survive
-``min_consecutive_frames`` before it counts, and once it has fired the same
-event on the same camera is suppressed for ``cooldown_seconds``.
-
-*Blocking.* Sending mail or raising a toast takes anywhere from milliseconds to
-seconds. Dispatch therefore runs on its own worker thread and the capture loop
-never waits for it.
-"""
+"""Decides which events reach an operator, and delivers them off-thread."""
 
 import logging
 import queue
@@ -23,8 +11,6 @@ log = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class Alert:
-    """An event that passed the debounce and cooldown gates."""
-
     event_type: str
     camera_id: str
     camera_name: str
@@ -59,7 +45,6 @@ class AlertManager:
         self._worker = None
         self._stop = threading.Event()
 
-    # -- lifecycle ---------------------------------------------------------
     def start(self):
         if self._worker is not None:
             return
@@ -77,26 +62,19 @@ class AlertManager:
         self._worker.join(timeout=timeout)
         self._worker = None
 
-    # -- decisioning -------------------------------------------------------
     def submit(self, events, camera_id, now=None, snapshot=None):
-        """Offer one frame's events to the manager.
+        """Call once per processed frame, including quiet ones, so streaks for
+        events that have stopped get reset. Returns the alerts that fired.
 
-        Must be called once per processed frame, including frames that produced
-        nothing, so that streaks for events which have stopped occurring are
-        reset. ``snapshot`` is a zero-argument callable returning JPEG bytes; it
-        is only invoked when an alert actually fires, so encoding costs nothing
-        on quiet frames.
-
-        Returns the alerts that fired on this frame.
+        `snapshot` is only called when an alert fires, so quiet frames pay
+        nothing for JPEG encoding.
         """
         now = time.time() if now is None else now
         seen = {}
         for event in events:
-            # Keep the highest-confidence instance of each event type.
             if event.type not in seen or event.confidence > seen[event.type].confidence:
                 seen[event.type] = event
 
-        # Reset streaks for this camera's events that are absent from this frame.
         for key in list(self._streaks):
             if key[0] == camera_id and key[1] not in seen:
                 self._streaks[key] = 0
@@ -138,7 +116,7 @@ class AlertManager:
             if snapshot is not None:
                 try:
                     snapshot_bytes = snapshot()
-                except Exception:  # a bad frame must not take down the loop
+                except Exception:
                     log.exception("snapshot capture failed for %s", alert.event_type)
             record_id = self.store.record(
                 camera_id=alert.camera_id,
@@ -154,12 +132,11 @@ class AlertManager:
         try:
             self._queue.put_nowait(alert)
         except queue.Full:
-            # Dropping a notification is better than stalling the camera; the
-            # alert is already in the database either way.
+            # Better to drop a notification than stall a camera; it is in the
+            # database either way.
             log.warning("alert dispatch queue full, dropped %s", alert.event_type)
         return alert
 
-    # -- dispatch ----------------------------------------------------------
     def _dispatch_loop(self):
         while not self._stop.is_set():
             try:
@@ -178,7 +155,6 @@ class AlertManager:
                 except Exception:
                     log.exception("channel %s failed to send %s", name, alert.event_type)
 
-    # -- introspection, used by the dashboard ------------------------------
     def cooldown_remaining(self, camera_id, event_type, now=None):
         now = time.time() if now is None else now
         rule = self.rules.get(event_type)

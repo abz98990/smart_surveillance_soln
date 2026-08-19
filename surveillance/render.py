@@ -1,4 +1,4 @@
-"""Frame annotation and multi-camera composition."""
+"""Drawing detections onto frames, and tiling frames for a multi-camera view."""
 
 import time
 
@@ -13,7 +13,7 @@ SEVERITY_COLOURS = {"critical": (0, 0, 235), "warning": (0, 165, 235)}
 
 
 def _label(frame, text, x, y, colour, scale=0.5, thickness=1):
-    """Draw text on a filled plate so it stays readable over any background."""
+    """Text on a filled plate, so it stays readable over any background."""
     (width, height), baseline = cv2.getTextSize(text, FONT, scale, thickness)
     x, y = clamp_text_origin(x, y, text_height=height + baseline)
     cv2.rectangle(
@@ -28,12 +28,8 @@ def _label(frame, text, x, y, colour, scale=0.5, thickness=1):
 
 
 def annotate(frame, detections, colours, copy=True):
-    """Return ``frame`` with every detection drawn on it.
-
-    ``copy`` defaults to True because the original quad-view drew all three
-    detectors onto one shared array - ``a = b = c = frame`` binds three names to
-    one buffer, so each panel inherited the previous panel's boxes.
-    """
+    # copy defaults to True: sharing one buffer between detectors is how the
+    # old quad view ended up with every panel showing the previous one's boxes.
     canvas = frame.copy() if copy else frame
     for detection in detections:
         colour = tuple(colours.get(detection.detector, DEFAULT_COLOUR))
@@ -50,7 +46,6 @@ def annotate(frame, detections, colours, copy=True):
 
 
 def stamp_status(frame, camera_name, fps, alert=None):
-    """Overlay the camera name, processing rate and any live alert banner."""
     _label(frame, "{}  |  {:.1f} fps".format(camera_name, fps), 8, 22,
            (60, 60, 60), scale=0.55)
     _label(frame, time.strftime("%Y-%m-%d %H:%M:%S"), 8, frame.shape[0] - 8,
@@ -66,7 +61,7 @@ def stamp_status(frame, camera_name, fps, alert=None):
 
 
 def fit_into(frame, box_width, box_height, background=0):
-    """Letterbox ``frame`` into a box without changing its aspect ratio."""
+    """Letterbox into a box rather than stretching to it."""
     height, width = frame.shape[:2]
     new_width, new_height = fit_size(width, height, box_width, box_height)
     resized = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_AREA)
@@ -78,7 +73,6 @@ def fit_into(frame, box_width, box_height, background=0):
 
 
 def compose_grid(frames, width, height, background=18):
-    """Tile annotated frames into a single canvas for a multi-camera view."""
     canvas = np.full((height, width, 3), background, dtype=np.uint8)
     if not frames:
         return canvas
@@ -90,13 +84,12 @@ def compose_grid(frames, width, height, background=18):
         row, column = divmod(index, columns)
         tile = fit_into(frame, cell_width, cell_height, background)
         y, x = row * cell_height, column * cell_width
-        # Slice by the tile's own shape so an odd canvas size cannot raise a
-        # broadcast error the way a fixed width//2 assignment does.
+        # Slice by the tile's shape - a fixed width//2 does not always add back
+        # up to width, and the mismatch raises.
         canvas[y:y + tile.shape[0], x:x + tile.shape[1]] = tile
     return canvas
 
 
 def encode_jpeg(frame, quality=75):
-    """Encode a frame as JPEG bytes, or ``None`` if encoding fails."""
     ok, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), quality])
     return buffer.tobytes() if ok else None

@@ -1,9 +1,4 @@
-"""Dashboard routes and templates.
-
-The service is stubbed, so these run without a camera, OpenCV or PyTorch. They
-verify that every page renders, that the alert log reaches the templates, and
-that the snapshot route cannot be walked out of its directory.
-"""
+"""Dashboard routes, against a stubbed service - no camera or OpenCV needed."""
 
 import tempfile
 import unittest
@@ -195,7 +190,7 @@ class MediaTests(WebTestCase):
         name = [a.snapshot for a in self.store.recent() if a.snapshot][0]
         response = self.client.get("/snapshot/" + name)
         self.assertEqual(response.status_code, 200)
-        response.close()   # release the file handle the test client holds open
+        response.close()   # the test client holds the file open otherwise
 
     def test_snapshot_cannot_escape_its_directory(self):
         for attempt in ("../../config.yaml", "..%2f..%2fconfig.yaml"):

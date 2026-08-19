@@ -1,15 +1,4 @@
-"""Persistent alert log.
-
-Two things live here: the SQLite event log the dashboard reads, and the
-retention policy. The privacy position stated in the report is that frames
-which are not evidence of an alert are never written to disk, and frames that
-are get deleted after a fixed period - both are enforced here rather than left
-as a claim.
-
-A fresh connection is opened per operation. SQLite handles that efficiently and
-it sidesteps the thread-affinity rules that would otherwise bite when camera
-workers and the Flask request thread both write.
-"""
+"""The alert log, and the retention policy that keeps it honest."""
 
 import logging
 import os
@@ -86,20 +75,14 @@ class EventStore:
             conn.executescript(SCHEMA)
 
     def _connect(self):
-        """Open a connection.
-
-        Always use through ``closing()``: sqlite3's own context manager commits
-        the transaction but does not close the handle, which leaks file
-        descriptors and keeps the database locked on Windows.
-        """
+        """Always wrap in closing(): sqlite3's context manager commits but does
+        not close, which leaks handles and locks the file on Windows."""
         conn = sqlite3.connect(str(self.db_path), timeout=10)
         conn.row_factory = sqlite3.Row
         return conn
 
-    # -- writes ------------------------------------------------------------
     def record(self, camera_id, event_type, severity, detail, confidence, at=None,
                snapshot_bytes=None):
-        """Log one alert, optionally with the JPEG that produced it."""
         at = time.time() if at is None else at
         snapshot_name = ""
 
@@ -125,7 +108,6 @@ class EventStore:
         with self._write_lock, closing(self._connect()) as conn, conn:
             conn.execute("UPDATE alerts SET acknowledged = 1 WHERE id = ?", (alert_id,))
 
-    # -- reads -------------------------------------------------------------
     def recent(self, limit=50, camera_id=None, severity=None):
         query = "SELECT * FROM alerts"
         clauses, params = [], []
@@ -165,14 +147,9 @@ class EventStore:
             ).fetchone()
             return row["n"]
 
-    # -- retention ---------------------------------------------------------
     def purge_expired(self, now=None):
-        """Delete alerts and snapshots past the retention window.
-
-        Returns the number of rows removed. Snapshot files are unlinked before
-        their rows are dropped so an interrupted purge leaves an orphaned row
-        rather than an orphaned image.
-        """
+        """Drop alerts past the retention window. Files go before rows, so an
+        interrupted purge leaves an orphaned row rather than an orphaned image."""
         if self.retention_days <= 0:
             return 0
         now = time.time() if now is None else now

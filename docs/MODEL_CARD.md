@@ -116,9 +116,9 @@ places the boxes less precisely. YOLO12n trains 6–8% faster.
 
 For a surveillance system where a box position feeds a downstream
 weapon-to-person association test, tight localisation matters more than a
-fractional gain at loose IoU. YOLO11n is therefore the production choice, and
-the YOLO12n checkpoints are kept at `weights_gun_v12/` and `weights_fire_v12/`
-so the comparison is reproducible.
+fractional gain at loose IoU. YOLO11n is therefore the production choice. The
+YOLO12n checkpoints themselves are not shipped — the run data behind this table
+is in `docs/training_runs/yolo12n-*/`, and the table regenerates from it.
 
 ## Face demonstrator — not in the pipeline
 

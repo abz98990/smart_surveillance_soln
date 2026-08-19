@@ -1,12 +1,9 @@
-"""Test suite for the Smart Surveillance System.
+"""python -m unittest discover -s tests -t .
 
-Run with:  python -m unittest discover -s tests -t .
-
-The suite deliberately avoids OpenCV and PyTorch so it runs on any machine.
-Everything except the model inference itself is covered.
+Runs without OpenCV or PyTorch; everything but model inference is covered.
 """
 
 import logging
 
-# Several tests exercise failure paths that log tracebacks on purpose.
+# Some tests exercise failure paths that log tracebacks on purpose.
 logging.disable(logging.ERROR)

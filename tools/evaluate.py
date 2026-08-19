@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
-"""Evaluation harness for the Final Project Report.
-
-Three things the project could not previously report:
-
-``--validate``  runs each model against a dataset split and prints precision,
-                recall, mAP@50 and mAP@50-95. Point it at a *test* split, not
-                the validation split the models were tuned on - the numbers
-                baked into the checkpoints are validation numbers and cannot be
-                quoted as held-out performance.
-
-``--benchmark`` measures per-model and end-to-end inference latency on this
-                machine, which is the evidence for any real-time claim.
-
-``--confusion`` runs the whole detector bundle over a folder of images and
-                reports what each model fires on. Aimed at cross-model false
-                positives - the fire model scoring 84% on a photograph of a
-                handgun is the case that motivated it.
-
-Results are written as CSV and JSON so they can go straight into the report.
+"""Evaluation for the report.
 
     python tools/evaluate.py --validate --data path/to/test_data.yaml
     python tools/evaluate.py --benchmark --iterations 100
     python tools/evaluate.py --confusion --images imgs/
+
+--validate wants a *test* split; the numbers in the checkpoints are validation
+numbers and cannot be quoted as held-out performance. Results land in
+docs/results/ as CSV and JSON.
 """
 
 import argparse

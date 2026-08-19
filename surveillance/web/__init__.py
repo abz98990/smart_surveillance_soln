@@ -1,4 +1,4 @@
-"""Flask dashboard for the Smart Surveillance System."""
+"""Flask dashboard."""
 
 from surveillance.web.app import create_app
 

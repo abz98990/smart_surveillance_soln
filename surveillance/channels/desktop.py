@@ -1,8 +1,4 @@
-"""Desktop notification channel.
-
-Called from the alert dispatch thread, never from a camera loop, so it is free
-to take as long as the platform needs. It contains no sleep of its own.
-"""
+"""Desktop notifications, raised from the dispatch thread."""
 
 import logging
 
@@ -20,7 +16,7 @@ class DesktopChannel:
 
     def _backend(self):
         if self._notification is None:
-            from plyer import notification  # noqa: PLC0415 - optional dependency
+            from plyer import notification
 
             self._notification = notification
         return self._notification
@@ -34,7 +30,7 @@ class DesktopChannel:
                 timeout=self.timeout,
             )
         except Exception:
-            # A missing notification daemon must never stop the pipeline.
+            # A missing notification daemon must not stop the pipeline.
             log.exception("desktop notification failed")
             return False
         return True

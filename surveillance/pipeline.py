@@ -1,10 +1,4 @@
-"""Capture, detection and analysis loop.
-
-One :class:`CameraWorker` thread per camera. Each worker owns its own analytics
-state but shares the loaded models, because Ultralytics inference is not
-re-entrant - a lock serialises it. That is a real scaling limit and is measured
-rather than hidden: see ``tools/evaluate.py --benchmark``.
-"""
+"""One capture-and-analyse thread per camera, plus the service that owns them."""
 
 import logging
 import threading
@@ -21,7 +15,7 @@ ALERT_BANNER_SECONDS = 5.0
 
 
 class FrameBuffer:
-    """Holds the most recent annotated frame for one camera."""
+    """Holds the latest annotated frame for one camera."""
 
     def __init__(self):
         self._lock = threading.Lock()
@@ -42,7 +36,6 @@ class FrameBuffer:
             return self._jpeg
 
     def wait_for_frame(self, timeout=2.0):
-        """Block until a newer frame arrives, then return it."""
         with self._new_frame:
             self._new_frame.wait(timeout=timeout)
             return self._jpeg
@@ -82,7 +75,7 @@ class CameraWorker(threading.Thread):
         self._stop.set()
 
     def _open(self):
-        import cv2  # noqa: PLC0415 - keeps the module importable without OpenCV
+        import cv2
 
         capture = cv2.VideoCapture(self.camera.source)
         if not capture.isOpened():
@@ -123,8 +116,8 @@ class CameraWorker(threading.Thread):
 
             now = time.time()
             if now < next_process_at:
-                # Surplus frames are dropped rather than queued, so the newest
-                # frame is always the one that gets analysed.
+                # Drop surplus frames rather than queue them, so what gets
+                # analysed is always the newest.
                 continue
             next_process_at = now + self._interval
 
@@ -177,14 +170,14 @@ class CameraWorker(threading.Thread):
 
 
 class SurveillanceService:
-    """Owns every worker, the shared models and the background retention job."""
-
     def __init__(self, config, store, alert_manager):
         self.config = config
         self.store = store
         self.alerts = alert_manager
         self.detectors = DetectorBundle(config.enabled_detectors)
         self.workers = {}
+        # Ultralytics inference is not re-entrant, so cameras take turns. That
+        # is the scaling limit; tools/evaluate.py --benchmark measures it.
         self._inference_lock = threading.Lock()
         self._stop = threading.Event()
         self._housekeeper = None
@@ -219,7 +212,6 @@ class SurveillanceService:
         log.info("service stopped")
 
     def _housekeeping_loop(self):
-        """Enforce the snapshot retention window once an hour."""
         while not self._stop.wait(3600):
             try:
                 removed = self.store.purge_expired()
