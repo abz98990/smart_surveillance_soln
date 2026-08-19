@@ -77,11 +77,26 @@ training provenance and known limitations are in
 |---|---|---:|---:|
 | Person | `person` | 0.860 | 0.40 |
 | Weapon | `Handgun` | 0.836 | 0.40 |
-| Fire | `fire`, `smoke` | 0.458 | 0.50 |
+| Fire | `fire` | 0.648 (AP) | 0.50 |
+| Fire | `smoke` | 0.269 (AP) | 0.70 |
 
-The fire model is the weak one. It runs at a higher threshold and needs four
-consecutive frames before it alerts anyone; see the model card for a documented
-false positive.
+The fire checkpoint's two classes perform very differently, so they sit at
+different operating points rather than sharing one threshold:
+
+```yaml
+class_conf:
+  fire: 0.50
+  smoke: 0.70
+```
+
+Smoke also needs four consecutive frames and is `warning` rather than
+`critical`. The model card explains why, and records a documented false
+positive.
+
+`yolo11n` was chosen over `yolo12n` on evidence, not assertion: trained on the
+same data with the same seed, YOLO11n leads mAP@50-95 by 11.2% on fire and 2.0%
+on handguns. The comparison checkpoints are kept in `weights_gun_v12/` and
+`weights_fire_v12/`.
 
 ## Alerts
 
@@ -128,8 +143,9 @@ the email channel simply is not registered and desktop alerts continue.
 python -m unittest discover -s tests -t .
 ```
 
-82 tests covering analytics, alert debouncing and cooldown, event storage and
-retention, configuration, geometry, and every dashboard route. They use only
+92 tests covering analytics, alert debouncing and cooldown, event storage and
+retention, configuration, per-class thresholds, geometry, and every dashboard
+route. They use only
 the standard library and Flask, so they run without OpenCV or PyTorch
 installed. Model inference itself is not unit tested — it is measured instead,
 by `tools/evaluate.py`.
@@ -164,7 +180,20 @@ python tools/evaluate.py --confusion --images imgs/
 Runs every detector over a folder and flags images where more than one fires —
 the cross-model false positives worth writing up.
 
-Results are written to `docs/results/` as CSV and JSON.
+```bash
+python tools/summarise_runs.py --write
+```
+
+Per-run and architecture-comparison tables built from the archived training
+runs in `docs/training_runs/`.
+
+```bash
+python tools/make_diagrams.py
+```
+
+Regenerates the six UML figures as SVG and PNG.
+
+Results are written to `docs/results/` as CSV, JSON and markdown.
 
 ## Repository layout
 
@@ -175,7 +204,7 @@ config.yaml             operator configuration
 surveillance/           the system
 tests/                  unit tests
 tools/                  evaluation and provenance
-docs/                   model card, evidence, generated results
+docs/                   model card, diagrams, evidence, training runs, results
 legacy/                 archived prototypes, see legacy/README.md
 weights_*/, new/        trained checkpoints
 imgs/                   captured frames (git-ignored: may contain personal data)

@@ -60,6 +60,9 @@ def check_config(config):
             size_mb = path.stat().st_size / (1024 * 1024)
             print("  [ok] detector {:<8} {:<28} {:.1f} MB, conf {:.2f}".format(
                 detector.id, detector.weights, size_mb, detector.conf))
+            for label, threshold in sorted(detector.class_conf_map.items()):
+                print("       {:<8}   class {:<10} conf {:.2f}".format(
+                    "", label, threshold))
         else:
             print("  [!] detector {:<8} weights missing: {}".format(
                 detector.id, detector.weights))

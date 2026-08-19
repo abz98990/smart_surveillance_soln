@@ -9,7 +9,7 @@ IDs match the review so the two can be read side by side.
 
 | ID | Finding | Resolution |
 |---|---|---|
-| SEC-1 | Gmail app password in plaintext in `mailing in python.py`, tracked and pushed | File deleted and untracked. SMTP config moved to environment variables (`.env.example`, `surveillance/config.py`). `.gitignore` added covering `.env`. A test now fails if any tracked Python file hard-codes an SMTP login. **The credential itself still needs revoking, and the git history still needs rewriting — see "Still outstanding".** |
+| SEC-1 | Gmail app password in plaintext in `mailing in python.py`, tracked and pushed | File deleted and untracked. SMTP config moved to environment variables (`.env.example`, `surveillance/config.py`). `.gitignore` added covering `.env`. A test fails if any tracked Python file hard-codes an SMTP login. **Local history rewritten** with `git filter-branch`: the file no longer appears in any reachable commit, and the `refs/original` backups were deleted. **The credential itself still needs revoking, and the rewrite still needs force-pushing — see "Still outstanding".** |
 
 ---
 
@@ -54,11 +54,13 @@ IDs match the review so the two can be read side by side.
 
 | ID | Finding | Resolution |
 |---|---|---|
-| PERF-1 | Fire model false-positives at 84% on a handgun photo | Documented rather than hidden. `docs/MODEL_CARD.md` describes it; the image is preserved at `docs/evidence/fire-false-positive-on-handgun.jpg`. Mitigations: threshold raised to 0.50, four consecutive frames required. `tools/evaluate.py --confusion` finds the whole class of error. |
+| PERF-1 | Fire model false-positives at 84% on a handgun photo | Root-caused with the archived run artefacts: the validation confusion matrix shows **260 background regions classified as fire** against 649 genuine fire instances. Documented in `docs/MODEL_CARD.md`; the image is preserved at `docs/evidence/fire-false-positive-on-handgun.jpg`. Mitigations: threshold 0.50, four consecutive frames, `warning` severity for smoke. `tools/evaluate.py --confusion` finds the whole class of error. |
+| PERF-4 | **New, from the run artefacts:** the fire model's aggregate mAP hid a large per-class split | The PR curve gives `fire` AP@50 = 0.648 but `smoke` = 0.269, and smoke recall is 0.303. Reporting one number for both was misleading. Per-class confidence thresholds were added to `DetectorConfig`/`DetectorBundle`, and `config.yaml` now runs fire at 0.50 and smoke at 0.70. Eight new tests cover it. |
+| PERF-5 | **New:** the architecture choice had no supporting evidence | The archived runs include a controlled YOLO11n vs YOLO12n comparison — same datasets, epochs, batch and seed. YOLO11n leads mAP@50-95 by 11.2% (fire) and 2.0% (handgun); YOLO12n is 0.7% ahead on handgun mAP@50 only, and trains 6-8% faster. `tools/summarise_runs.py` regenerates the tables. YOLO12n checkpoints kept at `weights_gun_v12/`, `weights_fire_v12/`. |
 | PERF-2 | Face model checkpoint is degenerate (P 0.350 at R 1.000) | Documented in the model card with the reason (fitness-based selection). Not used by the system. |
 | PERF-3 | All metrics are validation, not held-out | `tools/evaluate.py --validate` added for a proper test split. The model card states plainly that the current numbers are validation metrics and must not be quoted as generalisation performance. |
 | METH-1 | All test evidence is a webcam pointed at a monitor | Flagged in the model card. A real held-out set still has to be collected — see "Still outstanding". |
-| METH-2 | No dataset provenance anywhere | `tools/inspect_models.py` recovers the dataset yaml path, hyperparameters and metrics from each checkpoint without needing PyTorch. Source, licence and split sizes still have to be recovered from Drive. |
+| METH-2 | No dataset provenance anywhere | `tools/inspect_models.py` recovers the dataset manifest path, hyperparameters and metrics from each checkpoint without needing PyTorch. The archived runs add exact **validation instance counts** (649 fire, 323 smoke, 206 handgun) from the confusion matrices, and training-set size estimates derived from the `train_batch*` indices. Source, licence and exact split sizes still have to be recovered from Drive. |
 
 ---
 
@@ -98,11 +100,34 @@ All six figures regenerated to match the system as built.
 
 These need a person, not a patch.
 
-1. **Revoke the Gmail app password** at Google Account → Security → App passwords. Deleting the file does not invalidate the credential, and it remains in the git history.
-2. **Rewrite the git history** (`git filter-repo`) or make the repository private.
+1. **Revoke the Gmail app password** at Google Account → Security → App passwords. This is the only step that actually invalidates it, and nothing else on this list substitutes for it.
+2. **Force-push the rewritten history.** The local rewrite is done, but GitHub still holds the original commit until `git push --force origin master` runs. Note that GitHub may retain the old objects for a while even after that, which is another reason step 1 comes first.
 3. **Collect a held-out test set** of real images, separate from the validation split, and run `tools/evaluate.py --validate`. Chapters 4.3 and 4.4 have no foundation without it.
 4. **Recover dataset provenance** from the Colab Drive folders: source, licence, image count, split sizes.
 5. **Run `tools/evaluate.py --benchmark`** on the target machine to get real latency figures for the real-time claim.
+   Also worth running `git gc --prune=now` to drop the now-unreachable objects left by the history rewrite; I was not permitted to run it here.
 6. **Expand the bibliography** to 40–60 verified sources.
 7. **Add the FPR front matter**: Declaration, Proof-reading and Quality Assurance Statement, List of Figures, List of Tables, Glossary.
 8. **End-to-end run with a live camera.** The test suite covers everything except model inference, which needs OpenCV and PyTorch installed. Start with `python run.py --check`.
+
+
+---
+
+## Added from `1weights_perfected`
+
+The supplied folder turned out to hold the complete Ultralytics run outputs for
+four training runs, not improved weights — the YOLO11n checkpoints in it are
+byte-identical to the ones already in the project. What it added was evidence.
+
+| Artefact | Where it went | What it unlocked |
+|---|---|---|
+| `results.csv` × 4 | `docs/training_runs/<run>/` | Per-epoch curves; `tools/summarise_runs.py` |
+| `args.yaml` × 4 | same | Confirmed hyperparameters and Colab dataset manifests |
+| PR / F1 / P / R curves | same | **Per-class AP** — the finding that reshaped the fire configuration |
+| Confusion matrices | same | Exact validation instance counts and false-positive counts |
+| `results.png`, `labels.jpg` | same | Ready-made figures for Chapter IV |
+| YOLO12n checkpoints | `weights_*_v12/` | The architecture comparison |
+
+Two findings came out of it that the earlier review could not have reached:
+the fire/smoke per-class split (PERF-4) and the YOLO11n vs YOLO12n
+comparison (PERF-5). Both are in the model card.
